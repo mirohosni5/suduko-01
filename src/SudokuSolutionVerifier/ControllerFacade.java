@@ -18,7 +18,7 @@ public class ControllerFacade {
         // we are saving here for the undo ascton
         undoManager.addAction(row, col, oldValue);
 
-        // write to log file
+        // we are writing here for the log file..
         ActionLogger.log(row, col, oldValue, value);
 
         // update board
