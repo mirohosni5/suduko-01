@@ -15,7 +15,7 @@ public class ActionLogger {
                     ", new=" + newValue + "\n");
             fw.close();
         } catch (IOException e) {
-            System.out.println("Error writing log file");
+            System.out.println("couldnt write intofile");
         }
     }
 }
