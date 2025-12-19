@@ -176,7 +176,7 @@ public class SudokuGUI extends JFrame {
         return copy;
     }
 
-    // ================= MAIN =================
+    
     public static void main(String[] args) {
         new SudokuGUI();
     }
