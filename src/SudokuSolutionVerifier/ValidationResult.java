@@ -33,7 +33,7 @@ public class ValidationResult {
         for (DuplicateValue dv : colDups) out.add(dv.toString());
         return out;
     }
- 
+
     public List<String> getBoxes() {
         List<String> out = new ArrayList<>();
         for (DuplicateValue dv : boxDups) out.add(dv.toString());
