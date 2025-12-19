@@ -4,7 +4,7 @@
  */
 package SudokuSolutionVerifier;
 
-public class SudokuVerifier {
+public class udokuVerifier {
 
     public static void main(String[] args) {
         if (args.length != 2) {
