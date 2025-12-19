@@ -4,8 +4,11 @@
  */
 package SudokuSolutionVerifier;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
@@ -25,6 +28,18 @@ public class StorageManager {
             }
         }
     }
-    
+    public static int[][] loadBoard(String path) throws FileNotFoundException, IOException  {
+        int[][] board = new int[9][9];
+
+        try (BufferedReader b = new BufferedReader(new FileReader(path))) {
+            for (int i = 0; i < 9; i++) {
+                String[] line = b.readLine().split(" ");
+                for (int j = 0; j < 9; j++) {
+                    board[i][j] = Integer.parseInt(line[j]);
+                }
+            }
+        }
+        return board;
+    }
     
 }
