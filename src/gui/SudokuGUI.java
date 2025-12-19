@@ -126,7 +126,7 @@ public class SudokuGUI extends JFrame {
                     "INVALID ❌\nThere are duplicates.");
         }
     }
-    
+    //helper classes that i will need
     private void syncBoardFromGUI() {
         int[][] board = controller.getBoard();
 
