@@ -1,7 +1,7 @@
 package SudokuSolutionVerifier;
 
-import java.io.FileWriter;
-import java.io.;
+
+import java.io.*;
 
 public class ActionLogger {
 
