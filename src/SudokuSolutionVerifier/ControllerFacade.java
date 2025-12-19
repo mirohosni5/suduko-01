@@ -20,7 +20,7 @@ public class ControllerFacade {
 
         // we are writing here for the log file..
         ActionLogger.log(row, col, oldValue, value);
- 
+
         // updating the board
         board[row][col] = value;
     }
