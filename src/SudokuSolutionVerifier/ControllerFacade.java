@@ -10,12 +10,12 @@ public class ControllerFacade {
         undoManager = new UndoManager();
     }
 
-    // called when user edits a cell
+
     public void changeCell(int row, int col, int value) {
 
         int oldValue = board[row][col];
 
-        // save for undo
+        // we are saving here for the undo ascton
         undoManager.addAction(row, col, oldValue);
 
         // write to log file
