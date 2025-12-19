@@ -1,5 +1,5 @@
 package SudokuSolutionVerifier;
-//i used stack here
+//i used stack here just some push and pop
 import java.util.*;
 
 public class UndoManager {
