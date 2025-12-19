@@ -148,7 +148,7 @@ public class SudokuGUI extends JFrame {
     }
 
 
-    // ================= HELPERS =================
+    
     private void refreshBoard() {
         int[][] board = controller.getBoard();
         for (int r = 0; r < 9; r++) {
