@@ -106,10 +106,10 @@ public class SudokuGUI extends JFrame {
         return panel;
     }
 
-    // ================= VERIFY =================
+    
     private void verifyBoard() {
 
-        // 🔴 IMPORTANT: sync GUI → board before verify
+        
         syncBoardFromGUI();
 
         SudokuMode mode = new SequentialMode();
