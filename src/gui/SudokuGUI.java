@@ -2,7 +2,7 @@ package gui;
 
 import SudokuSolutionVerifier.*;
 
-package SudokuSolutionVerifier;
+
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
