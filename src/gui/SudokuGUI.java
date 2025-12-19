@@ -47,7 +47,7 @@ public class SudokuGUI extends JFrame {
         setVisible(true);
     }
 
-    
+
     private JPanel createGrid() {
         JPanel panel = new JPanel(new GridLayout(9, 9));
         panel.setBorder(new LineBorder(Color.BLACK, 2));
@@ -126,6 +126,7 @@ public class SudokuGUI extends JFrame {
                     "INVALID ❌\nThere are duplicates.");
         }
     }
+    
     private void syncBoardFromGUI() {
         int[][] board = controller.getBoard();
 
