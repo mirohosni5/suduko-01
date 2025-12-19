@@ -7,7 +7,7 @@ public class ActionLogger {
 
     public static void log(int row, int col, int oldValue, int newValue) {
         try { //file with true means append so we wouldnt overwrite files
-            FileWriter fw = new FileWriter("sudoko.txt", true);
+            FileWriter fw = new FileWriter("suduko.txt", true);
             //then we will write actions in a simple format
             fw.write("row=" + row +
                     ", col=" + col +
