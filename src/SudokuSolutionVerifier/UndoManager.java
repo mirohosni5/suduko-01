@@ -1,6 +1,6 @@
 package SudokuSolutionVerifier;
 /*i used stack here just some push and pop (lifo) last in first out
-*/
+so push when user edits and pop when user deletes*/
 import java.util.*;
 
 public class UndoManager {
