@@ -1,6 +1,6 @@
 package SudokuSolutionVerifier;
 
-
+//here the file will be created automatically
 import java.io.*;
 
 public class ActionLogger {
