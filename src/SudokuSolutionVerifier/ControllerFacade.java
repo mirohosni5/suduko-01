@@ -32,7 +32,7 @@ public class ControllerFacade {
             board[action.row][action.col] = action.oldValue;
         }
     }
-
+//just some getter
     public int[][] getBoard() {
         return board;
     }
