@@ -12,9 +12,10 @@ public class UndoManager {
     }
 //here i will pop the last saved action from the stack
     public UserAction undo() {
-        if (actions.empty()) {
+       //checking if empty if (actions.empty()) {
             return null;
         }
+        //then popp
         return actions.pop();
     }
 }
