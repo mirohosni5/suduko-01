@@ -13,8 +13,7 @@ public class SudokuGUI extends JFrame {
 
     // ===== MAIN =====
     public static void main(String[] args) {
-        // sample empty board (you can load CSV later)
-        int[][] board = new int[9][9];
+        int[][] board = new int[9][9]; // empty board
 
         SwingUtilities.invokeLater(() -> {
             SudokuGUI gui = new SudokuGUI(board);
@@ -22,19 +21,19 @@ public class SudokuGUI extends JFrame {
         });
     }
 
-    // ===== GUI CONSTRUCTOR =====
+    // ===== CONSTRUCTOR =====
     public SudokuGUI(int[][] board) {
         controller = new ControllerFacade(board);
 
-        setTitle("Sudoku Verifier");
+        setTitle("Sudoko");
         setSize(520, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null); // center screen
+        setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));
 
         // ===== TITLE =====
-        JLabel title = new JLabel("Sudoku Verifier", JLabel.CENTER);
-        title.setFont(new Font("Arial", Font.BOLD, 22));
+        JLabel title = new JLabel("Sudoko", JLabel.CENTER);
+        title.setFont(new Font("Arial", Font.BOLD, 24));
         add(title, BorderLayout.NORTH);
 
         // ===== GRID =====
@@ -50,21 +49,14 @@ public class SudokuGUI extends JFrame {
                 tf.setHorizontalAlignment(JTextField.CENTER);
                 tf.setFont(cellFont);
 
-                // thicker borders for 3x3 boxes
+                // thicker borders for 3x3
                 int top = (r % 3 == 0) ? 2 : 1;
                 int left = (c % 3 == 0) ? 2 : 1;
                 int bottom = (r == 8) ? 2 : 1;
                 int right = (c == 8) ? 2 : 1;
 
-                tf.setBorder(new LineBorder(Color.BLACK, 1));
                 tf.setBorder(BorderFactory.createMatteBorder(
                         top, left, bottom, right, Color.BLACK));
-
-                if (board[r][c] != 0) {
-                    tf.setText(String.valueOf(board[r][c]));
-                    tf.setEditable(false);
-                    tf.setBackground(new Color(230, 230, 230));
-                }
 
                 final int row = r;
                 final int col = c;
@@ -106,10 +98,20 @@ public class SudokuGUI extends JFrame {
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
-    // ===== VERIFY =====
+    // ===== VERIFY LOGIC =====
     private void verifyBoard() {
+        int[][] board = controller.getBoard();
+
+        // 1) check incomplete
+        if (hasEmptyCell(board)) {
+            JOptionPane.showMessageDialog(this,
+                    "INCOMPLETE ⚠️\nFill all cells first.");
+            return;
+        }
+
+        // 2) check duplicates
         SudokuMode mode = new SequentialMode();
-        ValidationResult result = mode.verify(controller.getBoard());
+        ValidationResult result = mode.verify(board);
 
         if (result.isValid()) {
             JOptionPane.showMessageDialog(this, "VALID ✅");
@@ -118,17 +120,4 @@ public class SudokuGUI extends JFrame {
         }
     }
 
-    // ===== REFRESH AFTER UNDO =====
-    private void refreshBoard() {
-        int[][] board = controller.getBoard();
-        for (int r = 0; r < 9; r++) {
-            for (int c = 0; c < 9; c++) {
-                if (board[r][c] == 0) {
-                    cells[r][c].setText("");
-                } else {
-                    cells[r][c].setText(String.valueOf(board[r][c]));
-                }
-            }
-        }
-    }
-}
+// ===== CHECK EMPTY ==
