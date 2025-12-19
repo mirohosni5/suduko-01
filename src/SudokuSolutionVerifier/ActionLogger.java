@@ -2,23 +2,19 @@ package SudokuSolutionVerifier;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 public class ActionLogger {
 
-    private static final String LOG_FILE = "log.txt";
-
-    // Log one user action
     public static void log(int row, int col, int oldValue, int newValue) {
-        try (PrintWriter out = new PrintWriter(new FileWriter(LOG_FILE, true))) {
-            out.println(
-                    "Row=" + row +
-                            ", Col=" + col +
-                            ", Old=" + oldValue +
-                            ", New=" + newValue
-            );
+        try {
+            FileWriter fw = new FileWriter("log.txt", true);
+            fw.write("row=" + row +
+                    ", col=" + col +
+                    ", old=" + oldValue +
+                    ", new=" + newValue + "\n");
+            fw.close();
         } catch (IOException e) {
-            System.out.println("Failed to write to log file");
+            System.out.println("Error writing log file");
         }
     }
 }
