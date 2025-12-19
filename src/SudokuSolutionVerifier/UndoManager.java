@@ -4,8 +4,8 @@ so push when user edits and pop when user deletes*/
 import java.util.*;
 
 public class UndoManager {
-    //this is called everytime the user changes anything
-    private Stack<UserAction> actions = new Stack<>();
+    /
+    private Stack<UserAction> actions = new Stack<>();/
 //and we will save the old value incase we want to restoreit
     public void addAction(int row, int col, int oldValue) {
         actions.push(new UserAction(row, col, oldValue));
