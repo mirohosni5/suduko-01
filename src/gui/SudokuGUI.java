@@ -108,6 +108,10 @@ public class SudokuGUI extends JFrame {
 
     // ================= VERIFY =================
     private void verifyBoard() {
+
+        // 🔴 IMPORTANT: sync GUI → board before verify
+        syncBoardFromGUI();
+
         SudokuMode mode = new SequentialMode();
         ValidationResult result = mode.verify(controller.getBoard());
 
@@ -122,6 +126,7 @@ public class SudokuGUI extends JFrame {
                     "INVALID ❌\nThere are duplicates.");
         }
     }
+
 
     // ================= HELPERS =================
     private void refreshBoard() {
