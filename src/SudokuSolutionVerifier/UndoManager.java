@@ -5,7 +5,8 @@ import java.util.*;
 public class UndoManager {
 
     private Stack<UserAction> actions = new Stack<>();
-//this is called everytime the user changes anything 
+//this is called everytime the user changes anything and we will save the old value incase we want to restoreit
+    //
     public void addAction(int row, int col, int oldValue) {
         actions.push(new UserAction(row, col, oldValue));
     }
