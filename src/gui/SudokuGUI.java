@@ -3,7 +3,6 @@ package gui;
 import SudokuSolutionVerifier.*;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class SudokuGUI extends JFrame {
@@ -11,9 +10,9 @@ public class SudokuGUI extends JFrame {
     private JTextField[][] cells = new JTextField[9][9];
     private ControllerFacade controller;
 
-    // ===== MAIN =====
+    // ================= MAIN =================
     public static void main(String[] args) {
-        int[][] board = new int[9][9]; // empty board
+        int[][] board = new int[9][9]; // empty board = INCOMPLETE
 
         SwingUtilities.invokeLater(() -> {
             SudokuGUI gui = new SudokuGUI(board);
@@ -21,22 +20,22 @@ public class SudokuGUI extends JFrame {
         });
     }
 
-    // ===== CONSTRUCTOR =====
+    // ================= CONSTRUCTOR =================
     public SudokuGUI(int[][] board) {
         controller = new ControllerFacade(board);
 
-        setTitle("Sudoko");
+        setTitle("Sudoku");
         setSize(520, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));
 
-        // ===== TITLE =====
-        JLabel title = new JLabel("Sudoko", JLabel.CENTER);
+        // ---------- TITLE ----------
+        JLabel title = new JLabel("Sudoku", JLabel.CENTER);
         title.setFont(new Font("Arial", Font.BOLD, 24));
         add(title, BorderLayout.NORTH);
 
-        // ===== GRID =====
+        // ---------- GRID ----------
         JPanel gridPanel = new JPanel(new GridLayout(9, 9));
         gridPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
@@ -49,7 +48,7 @@ public class SudokuGUI extends JFrame {
                 tf.setHorizontalAlignment(JTextField.CENTER);
                 tf.setFont(cellFont);
 
-                // thicker borders for 3x3
+                // thicker borders for 3x3 blocks
                 int top = (r % 3 == 0) ? 2 : 1;
                 int left = (c % 3 == 0) ? 2 : 1;
                 int bottom = (r == 8) ? 2 : 1;
@@ -68,6 +67,7 @@ public class SudokuGUI extends JFrame {
                         controller.changeCell(row, col, value);
                     } catch (Exception ex) {
                         tf.setText("");
+                        controller.changeCell(row, col, 0);
                     }
                 });
 
@@ -78,7 +78,7 @@ public class SudokuGUI extends JFrame {
 
         add(gridPanel, BorderLayout.CENTER);
 
-        // ===== BUTTONS =====
+        // ---------- BUTTONS ----------
         JButton verifyBtn = new JButton("Verify");
         JButton undoBtn = new JButton("Undo");
 
@@ -98,39 +98,55 @@ public class SudokuGUI extends JFrame {
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
-    // ===== VERIFY LOGIC =====
+    // ================= VERIFY =================
     private void verifyBoard() {
         int[][] board = controller.getBoard();
 
-        // 1) check incomplete
+        // INCOMPLETE check (Lab requirement)
         if (hasEmptyCell(board)) {
-            JOptionPane.showMessageDialog(this,
-                    "INCOMPLETE ⚠️\nFill all cells first.");
+            JOptionPane.showMessageDialog(
+                    this,
+                    "INCOMPLETE ⚠️\nFill all cells first.",
+                    "Result",
+                    JOptionPane.WARNING_MESSAGE
+            );
             return;
         }
 
-        // 2) check duplicates
+        // VALID / INVALID check
         SudokuMode mode = new SequentialMode();
         ValidationResult result = mode.verify(board);
 
         if (result.isValid()) {
-            JOptionPane.showMessageDialog(this, "VALID ✅");
+            JOptionPane.showMessageDialog(
+                    this,
+                    "VALID ✅",
+                    "Result",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
         } else {
-            JOptionPane.showMessageDialog(this, "INVALID ❌");
+            JOptionPane.showMessageDialog(
+                    this,
+                    "INVALID ❌\nDuplicates found.",
+                    "Result",
+                    JOptionPane.ERROR_MESSAGE
+            );
         }
     }
 
-    // ===== CHECK EMPTY =====
+    // ================= EMPTY CHECK =================
     private boolean hasEmptyCell(int[][] board) {
         for (int r = 0; r < 9; r++) {
             for (int c = 0; c < 9; c++) {
-                if (board[r][c] == 0) return true;
+                if (board[r][c] == 0) {
+                    return true;
+                }
             }
         }
         return false;
     }
 
-    // ===== REFRESH AFTER UNDO =====
+    // ================= REFRESH AFTER UNDO =================
     private void refreshBoard() {
         int[][] board = controller.getBoard();
         for (int r = 0; r < 9; r++) {
