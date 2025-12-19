@@ -126,6 +126,26 @@ public class SudokuGUI extends JFrame {
                     "INVALID ❌\nThere are duplicates.");
         }
     }
+    private void syncBoardFromGUI() {
+        int[][] board = controller.getBoard();
+
+        for (int r = 0; r < 9; r++) {
+            for (int c = 0; c < 9; c++) {
+                if (cells[r][c].isEditable()) {
+                    String text = cells[r][c].getText().trim();
+                    if (text.isEmpty()) {
+                        board[r][c] = 0;
+                    } else {
+                        try {
+                            board[r][c] = Integer.parseInt(text);
+                        } catch (Exception e) {
+                            board[r][c] = 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
 
 
     // ================= HELPERS =================
