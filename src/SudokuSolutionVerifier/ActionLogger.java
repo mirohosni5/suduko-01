@@ -6,7 +6,7 @@ import java.io.*;
 public class ActionLogger {
 
     public static void log(int row, int col, int oldValue, int newValue) {
-        try { //file with true means append 
+        try { //file with true means append so we wouldnt overwrite files
             FileWriter fw = new FileWriter("log.txt", true);
             fw.write("row=" + row +
                     ", col=" + col +
