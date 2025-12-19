@@ -88,7 +88,7 @@ public class SudokuGUI extends JFrame {
         return panel;
     }
 
-    // ================= BUTTONS =================
+    
     private JPanel createButtons() {
         JPanel panel = new JPanel();
 
