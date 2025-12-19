@@ -47,7 +47,7 @@ public class SudokuGUI extends JFrame {
         setVisible(true);
     }
 
-    // ================= GRID =================
+    
     private JPanel createGrid() {
         JPanel panel = new JPanel(new GridLayout(9, 9));
         panel.setBorder(new LineBorder(Color.BLACK, 2));
@@ -88,7 +88,7 @@ public class SudokuGUI extends JFrame {
         return panel;
     }
 
-    
+
     private JPanel createButtons() {
         JPanel panel = new JPanel();
 
