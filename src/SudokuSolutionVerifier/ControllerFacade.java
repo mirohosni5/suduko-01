@@ -25,7 +25,7 @@ public class ControllerFacade {
         board[row][col] = value;
     }
 
-    // undo last move
+    // 
     public void undo() {
         UserAction action = undoManager.undo();
         if (action != null) {
