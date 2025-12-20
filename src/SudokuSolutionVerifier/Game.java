@@ -25,4 +25,11 @@ public class Game {
         return state;
     }
 
+    public VerificationResult verify() {
+        SudokuVerifier verifier = new SudokuVerifier();
+        VerificationResult result = verifier.verify(board);
+        this.state = result.getState();
+        return result;
+    }
+
 }
