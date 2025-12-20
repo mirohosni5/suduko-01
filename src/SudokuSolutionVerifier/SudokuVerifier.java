@@ -29,6 +29,28 @@ public class SudokuVerifier {
             }
         }
 
+        for (int j = 0; j < 9; j++) {
+            boolean[] used = new boolean[10];
+            Cell[] firstPos = new Cell[10];
+
+            for (int i = 0; i < 9; i++) {
+                int val = board[i][j];
+
+                if (val == 0) continue;
+
+                if (used[val]) {
+                    invalidCells.add(firstPos[val]);
+                    invalidCells.add(new Cell(i, j));
+                } else {
+                    used[val] = true;
+                    firstPos[val] = new Cell(i, j);
+                }
+            }
+        }
+
+
+
+
 
     }
 
