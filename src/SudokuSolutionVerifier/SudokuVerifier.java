@@ -73,9 +73,24 @@ public class SudokuVerifier {
         }
 
 
+        if (!invalidCells.isEmpty()) {
+            return new VerificationResult(
+                    GameState.INVALID,
+                    new ArrayList<>(invalidCells)
+            );
+        }
 
+        if (hasZero) {
+            return new VerificationResult(
+                    GameState.INCOMPLETE,
+                    Collections.emptyList()
+            );
+        }
 
-
+        return new VerificationResult(
+                GameState.VALID,
+                Collections.emptyList()
+        );
     }
 
 }
