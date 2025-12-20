@@ -16,4 +16,12 @@ public class Catalog {
     public void removeGame(Game game) {
         games.remove(game);
     }
+
+    public List<Game> getGames() {
+        return games;
+    }
+
+    public boolean isEmpty() {
+        return games.isEmpty();
+    }
 }
