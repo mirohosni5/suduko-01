@@ -8,4 +8,12 @@ public class Catalog {
     public Catalog() {
         games = new ArrayList<>();
     }
+
+    public void addGame(Game game) {
+        games.add(game);
+    }
+
+    public void removeGame(Game game) {
+        games.remove(game);
+    }
 }
