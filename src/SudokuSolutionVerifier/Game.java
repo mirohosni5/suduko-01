@@ -8,4 +8,8 @@ public class Game {
         this.board = board;
         this.state = GameState.INCOMPLETE; // default
     }
+
+    public int[][] getBoard() {
+        return board;
+    }
 }
