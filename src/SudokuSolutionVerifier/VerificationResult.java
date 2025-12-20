@@ -11,6 +11,12 @@ public class VerificationResult {
         this.invalidCells = invalidCells;
     }
 
+    public GameState getState() {
+        return state;
+    }
 
+    public List<Cell> getInvalidCells() {
+        return invalidCells;
+    }
 }
 
