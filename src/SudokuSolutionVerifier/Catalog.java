@@ -18,4 +18,12 @@ public class Catalog {
     public boolean allModesExist() {
         return allModesExist;
     }
+
+    public void setCurrent(boolean current) {
+        this.current = current;
+    }
+
+    public void setAllModesExist(boolean allModesExist) {
+        this.allModesExist = allModesExist;
+    }
 }
