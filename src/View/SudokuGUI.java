@@ -192,7 +192,7 @@ public class SudokuGUI extends JFrame {
     
     private void logAction(int row, int col, int oldValue, int newValue) {
         try {
-            UserAction action = new UserAction(row, col, oldValue);
+            UserAction action = new UserAction(row, col, oldValue, newValue);
             controller.logUserAction(action);
         } catch (Exception e) {
             System.err.println("Error logging action: " + e.getMessage());
