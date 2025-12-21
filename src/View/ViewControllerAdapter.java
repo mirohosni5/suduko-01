@@ -3,8 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package View;
-
-
 import Controller.DifficultyEnum;
 import Controller.Viewable;
 import model.Catalog;
@@ -23,63 +21,38 @@ public class ViewControllerAdapter implements controllable {
      @Override
     public boolean[] getCatalog() {
         Catalog catalog = controller.getCatalog();
-        return new boolean[] {
-            catalog.hasCurrentGame(),
-            catalog.allModesExist()
-        };
+        return new boolean[] {catalog.hasCurrentGame(),catalog.allModesExist()};
     }
-    
     @Override
     public int[][] getGame(char level) throws Exception {
         DifficultyEnum difficulty;
         
         switch (level) {
-            case 'E':
-            case 'e':
-                difficulty = DifficultyEnum.EASY;
-                break;
-            case 'M':
-            case 'm':
-                difficulty = DifficultyEnum.MEDIUM;
-                break;
-            case 'H':
-            case 'h':
-                difficulty = DifficultyEnum.HARD;
-                break;
-            case 'I':
-            case 'i':
-                difficulty = DifficultyEnum.INCOMPLETE;
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid difficulty level: " + level);
+            case 'E', 'e' -> difficulty = DifficultyEnum.EASY;
+            case 'M', 'm' -> difficulty = DifficultyEnum.MEDIUM;
+            case 'H', 'h' -> difficulty = DifficultyEnum.HARD;
+            case 'I', 'i' -> difficulty = DifficultyEnum.INCOMPLETE;
+            default -> throw new IllegalArgumentException("Invalid difficulty level: " + level);
         }
-        
         Game game = controller.getGame(difficulty);
         return game.getBoard();
     }
-    
     @Override
     public void driveGames(String sourcePath) throws Exception {
         int[][] board = loadBoardFromFile(sourcePath);
         Game sourceGame = new Game(board);
         controller.driveGames(sourceGame);
     }
-    
     @Override
     public boolean[][] verifyGame(int[][] game) {
-        Game gameObj = new Game(game);
-        String result = controller.verifyGame(gameObj);
-        
+        Game g = new Game(game);
+        String result = controller.verifyGame(g);
         boolean[][] validationResult = new boolean[9][9];
-        
-        // Initialize all cells as valid
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 validationResult[i][j] = true;
             }
         }
-        
-        // If invalid, parse the invalid cell positions
         if (result.startsWith("INVALID")) {
             String[] parts = result.split(" ");
             for (int i = 1; i < parts.length; i++) {
@@ -88,28 +61,21 @@ public class ViewControllerAdapter implements controllable {
                 int col = Integer.parseInt(coords[1]);
                 validationResult[row][col] = false;
             }
-        }
-        
+        } 
         return validationResult;
     }
-    
     @Override
     public int[][] solveGame(int[][] game) throws Exception {
-        Game gameObj = new Game(game);
-        int[] solution = controller.solveGame(gameObj);
-        
-        // Convert flat array to 2D array
-        // Format: [row0, col0, val0, row1, col1, val1, ...]
+        Game g = new Game(game);
+        int[] solution = controller.solveGame(g);
         int[][] result = new int[5][3];
         for (int i = 0; i < 5; i++) {
-            result[i][0] = solution[i * 3];     // row
-            result[i][1] = solution[i * 3 + 1]; // col
-            result[i][2] = solution[i * 3 + 2]; // value
+            result[i][0] = solution[i * 3];    
+            result[i][1] = solution[i * 3 + 1]; 
+            result[i][2] = solution[i * 3 + 2]; 
         }
-        
         return result;
     }
-    
     @Override
     public void logUserAction(UserAction userAction) throws Exception {
         String actionString = userAction.toString();
