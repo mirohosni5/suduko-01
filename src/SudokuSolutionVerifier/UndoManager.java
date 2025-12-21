@@ -10,7 +10,7 @@ public class UndoManager {
 /*and we will save the old value incase we want to restoreit
 this is called everytime the user changes anything*/
     public void addAction(int row, int col, int oldValue) {
-        actions.push(new UserAction(row, col, oldValue));
+        actions.push(new UserAction(row, col, oldValue, undo().newValue));
     }
 //here i will pop the last saved action from the stack
     public UserAction undo() {
