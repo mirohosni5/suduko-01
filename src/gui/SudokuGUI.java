@@ -109,7 +109,7 @@ public class SudokuGUI extends JFrame {
     private void verifyBoard() {
         syncBoardFromGUI();
 
-        SudokuMode mode = new SequentialMode();
+        SequentialMode mode = new SequentialMode();
         ValidationResult result = mode.verify(controller.getBoard());
 
         if (hasZero(controller.getBoard())) {
