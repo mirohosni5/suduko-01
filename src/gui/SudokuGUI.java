@@ -11,7 +11,7 @@ public class SudokuGUI extends JFrame {
     private ControllerFacade controller;
 
     // 👇 constructor now RECEIVES the board
-    public SudokuGUI(int[][] board) {
+    public SudokuGUI(int board) {
         controller = new ControllerFacade(copyBoard(board));
 
         setTitle("Sudoku");
