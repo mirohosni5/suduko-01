@@ -9,7 +9,7 @@ package View;
  * @author M
  */
 public interface controllable {
-    boolean getCatalog();
+    boolean[] getCatalog();
     boolean[][] verifyGame(int[][] game);
     int[][] getGame(char level) throws Exception;
     int[][] solveGame(int[][] game) throws Exception;
