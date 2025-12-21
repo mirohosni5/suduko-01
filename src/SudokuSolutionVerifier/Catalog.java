@@ -11,4 +11,8 @@ public class Catalog {
         this.allModesExist = allModesExist;
     }
 
+    public boolean hasCurrentGame() {
+        return current;
+    }
+
 }
