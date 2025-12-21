@@ -38,4 +38,7 @@ public class Game {
         return countEmptyCells() == 5;
     }
 
+    public void setBoard(int[][] newBoard) {
+        this.board = newBoard;
+    }
 }
