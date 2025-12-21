@@ -18,4 +18,8 @@ public class Game {
     public void setCell(int row, int col, int value) {
         board[row][col] = value;
     }
+
+    public boolean isEmptyCell(int row, int col) {
+        return board[row][col] == 0;
+    }
 }
