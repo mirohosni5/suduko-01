@@ -30,4 +30,8 @@ public class Catalog {
     public boolean canStartNewGame() {
         return allModesExist && !current;
     }
+
+    public boolean shouldLoadCurrentGame() {
+        return current;
+    }
 }
