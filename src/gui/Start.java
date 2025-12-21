@@ -4,40 +4,50 @@
  */
 package gui;
 
+import javax.swing.*;
+
 public class Start extends javax.swing.JFrame {
 
     public Start() {
         initComponents();
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(null); // center window
     }
 
     private void initComponents() {
 
-        javax.swing.JButton jButtonEasy = new javax.swing.JButton();
-        javax.swing.JButton jButtonMedium = new javax.swing.JButton();
-        javax.swing.JButton jButtonHard = new javax.swing.JButton();
-        javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
+        JButton jButtonEasy = new JButton();
+        JButton jButtonMedium = new JButton();
+        JButton jButtonHard = new JButton();
+        JLabel jLabel1 = new JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sudoku");
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24));
+        // ===== TITLE =====
+        jLabel1.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 24));
         jLabel1.setText("Sudoku");
 
+        // ===== BUTTON TEXT =====
         jButtonEasy.setText("Easy");
         jButtonMedium.setText("Medium");
         jButtonHard.setText("Hard");
 
-        // ✅ CORRECT constructor calls
+        // ===== BUTTON ACTIONS =====
+        // Easy → remove 10 cells
         jButtonEasy.addActionListener(e -> new SudokuGUI(10));
+
+        // Medium → remove 25 cells
         jButtonMedium.addActionListener(e -> new SudokuGUI(25));
+
+        // Hard → remove 25 cells (as required in PDF)
         jButtonHard.addActionListener(e -> new SudokuGUI(25));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        // ===== LAYOUT =====
+        GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
 
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                layout.createParallelGroup(GroupLayout.Alignment.CENTER)
                         .addComponent(jLabel1)
                         .addComponent(jButtonEasy, 120, 120, 120)
                         .addComponent(jButtonMedium, 120, 120, 120)
@@ -61,6 +71,20 @@ public class Start extends javax.swing.JFrame {
     }
 
     public static void main(String[] args) {
+
+        // ===== NIMBUS LOOK & FEEL (RESTORED) =====
+        try {
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            // fallback to default
+        }
+
+        // ===== START APP =====
         java.awt.EventQueue.invokeLater(() -> new Start().setVisible(true));
     }
 }
