@@ -125,9 +125,43 @@ public class SudokuVerifier {
 
     public boolean[][] getValidationMatrix(int[][] board) {
         boolean[][] valid = new boolean[9][9];
+
+        for (int i = 0; i < 9; i++)
+            Arrays.fill(valid[i], true);
+
+        // check row
+        for (DuplicateValue dv : rowDups) {
+            int row = dv.getIndex() - 1;
+            for (int col : dv.getPositions()) {
+                valid[row][col] = false;
+            }
+        }
+
+        // check column
+        for (DuplicateValue dv : colDups) {
+            int col = dv.getIndex() - 1;
+            for (int row : dv.getPositions()) {
+                valid[row][col] = false;
+            }
+        }
+
+        // check box
+        for (DuplicateValue dv : boxDups) {
+            int boxIndex = dv.getIndex() - 1;
+            int boxStartRow = (boxIndex / 3) * 3;
+            int boxStartCol = (boxIndex % 3) * 3;
+            for (int pos : dv.getPositions()) {
+                int r = boxStartRow + (pos / 3);
+                int c = boxStartCol + (pos % 3);
+                valid[r][c] = false;
+            }
+        }
+
+        // empty cells
         for (int i = 0; i < 9; i++)
             for (int j = 0; j < 9; j++)
-                valid[i][j] = board[i][j] != 0;
+                if (board[i][j] == 0) valid[i][j] = false;
+
         return valid;
     }
 
