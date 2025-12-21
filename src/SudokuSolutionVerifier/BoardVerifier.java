@@ -1,57 +1,72 @@
 package SudokuSolutionVerifier;
 //engyz
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 public class BoardVerifier {
-
-    private final int[][] board;
-
-    public BoardVerifier(int[][] board) {
-        this.board = board;
+     public static boolean verifyWithCombination(int[][] board, List<int[]> emptyCells, int[] combination) {
+        
+        Map<String, Integer> tempState = new HashMap<>();
+        for (int i = 0; i < emptyCells.size(); i++) {
+            int[] cell = emptyCells.get(i);
+            tempState.put(cell[0] + "," + cell[1], combination[i]);
+        }
+        return isValidBoard(board, tempState);
     }
-
-    public boolean isValid() {
-        return checkRows() && checkColumns() && checkBoxes();
+    private static boolean isValidBoard(int[][] board, Map<String, Integer> tempState) {
+        for (int row = 0; row < 9; row++) {
+            if (!isValidUnit(board, tempState, row, 0, 0, 1)) {
+                return false;
+            }
+        }
+        for (int col = 0; col < 9; col++) {
+            if (!isValidUnit(board, tempState, 0, col, 1, 0)) {
+                return false;
+            }
+        }
+        for (int boxRow = 0; boxRow < 3; boxRow++) {
+            for (int boxCol = 0; boxCol < 3; boxCol++) {
+                if (!isValid3x3Box(board, tempState, boxRow * 3, boxCol * 3)) 
+                    return false;
+            }
+        }
+        return true;
     }
-
-    private boolean checkRows() {
+    private static boolean isValidUnit(int[][] board, Map<String, Integer> tempState,int startRow, int startCol, int rowInc, int colInc) {
+        Set<Integer> seen = new HashSet<>();
+        int row = startRow;
+        int col = startCol;
         for (int i = 0; i < 9; i++) {
-            boolean[] seen = new boolean[10];
-            for (int j = 0; j < 9; j++) {
-                int val = board[i][j];
-                if (val == 0) continue;
-                if (seen[val]) return false;
-                seen[val] = true;
+            int value = getValue(board, tempState, row, col);
+            if (value != 0) {
+                if (seen.contains(value)) return false;
+                seen.add(value);
             }
+            row += rowInc;
+            col += colInc;
         }
         return true;
     }
-
-    private boolean checkColumns() {
-        for (int j = 0; j < 9; j++) {
-            boolean[] seen = new boolean[10];
-            for (int i = 0; i < 9; i++) {
-                int val = board[i][j];
-                if (val == 0) continue;
-                if (seen[val]) return false;
-                seen[val] = true;
-            }
-        }
-        return true;
-    }
-
-    private boolean checkBoxes() {
-        for (int boxRow = 0; boxRow < 9; boxRow += 3) {
-            for (int boxCol = 0; boxCol < 9; boxCol += 3) {
-                boolean[] seen = new boolean[10];
-                for (int i = 0; i < 3; i++) {
-                    for (int j = 0; j < 3; j++) {
-                        int val = board[boxRow + i][boxCol + j];
-                        if (val == 0) continue;
-                        if (seen[val]) return false;
-                        seen[val] = true;
-                    }
+    private static boolean isValid3x3Box(int[][] board, Map<String, Integer> tempState,int startRow, int startCol) {
+        Set<Integer> seen = new HashSet<>();
+        for (int row = startRow; row < startRow + 3; row++) {
+            for (int col = startCol; col < startCol + 3; col++) {
+                int value = getValue(board, tempState, row, col);
+                if (value != 0) {
+                    if (seen.contains(value)) return false;
+                    seen.add(value);
                 }
             }
         }
         return true;
+    }
+    private static int getValue(int[][] board, Map<String, Integer> tempState,int row, int col) {
+        String key = row + "," + col;
+        if (tempState.containsKey(key)) return tempState.get(key);
+        return board[row][col];
     }
 }
