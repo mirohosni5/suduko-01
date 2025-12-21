@@ -2,7 +2,7 @@ package SudokuSolutionVerifier;
 
 import java.util.*;
 
-public class SequentialMode {
+public class SequentialMode implements SudokuMode {
 
     public ValidationResult verify(int[][] board) {
         BasicChecks ck = new BasicChecks(board);
