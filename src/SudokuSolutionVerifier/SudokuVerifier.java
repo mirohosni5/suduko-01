@@ -19,6 +19,19 @@ public class SudokuVerifier {
             return true;
         }
 
+        private boolean checkColumns(int[][] board) {
+            for (int j = 0; j < 9; j++) {
+                boolean[] seen = new boolean[10];
+                for (int i = 0; i < 9; i++) {
+                    int value = board[i][j];
+                    if (seen[value]) return false;
+                    seen[value] = true;
+                }
+            }
+            return true;
+        }
+
+
 
 
     }
