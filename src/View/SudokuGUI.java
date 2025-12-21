@@ -224,11 +224,11 @@ public class SudokuGUI extends JFrame {
             }
             
             if (allValid && !hasEmpty) {
-                statusLabel.setText("Congratulations! Puzzle solved correctly!");
+                statusLabel.setText("Valid Sudoku Solution");
                 statusLabel.setForeground(new Color(0, 150, 0));
                 JOptionPane.showMessageDialog(this,"Valid Solution","Success",JOptionPane.INFORMATION_MESSAGE);
             } else if (allValid) {
-                statusLabel.setText("So far so good! Keep going...");
+                statusLabel.setText("Valid for now, Keep going");
                 statusLabel.setForeground(new Color(0, 100, 200));
             } else {
                 statusLabel.setText("Invalid cells highlighted in red");
