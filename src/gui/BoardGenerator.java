@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class BoardGenerator {
 
-    // A FULL valid solved Sudoku
+    
     private static final int[][] SOLVED_BOARD = {
             {5,3,4,6,7,8,9,1,2},
             {6,7,2,1,9,5,3,4,8},
