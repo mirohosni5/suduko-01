@@ -22,4 +22,17 @@ public class Game {
     public boolean isEmptyCell(int row, int col) {
         return board[row][col] == 0;
     }
+
+    public int countEmptyCells() {
+        int count = 0;
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (board[i][j] == 0)
+                    count++;
+            }
+        }
+        return count;
+    }
+
+
 }
