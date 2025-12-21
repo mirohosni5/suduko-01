@@ -9,4 +9,9 @@ public class ActionHistory {
         stack.push(a);
     }
 
+    public UserAction pop() {
+        if (stack.isEmpty()) return null;
+        return stack.pop();
+    }
+
 }
