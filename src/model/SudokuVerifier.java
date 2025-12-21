@@ -123,6 +123,14 @@ public class SudokuVerifier {
         return GameState.VALID;
     }
 
+    public boolean[][] getValidationMatrix(int[][] board) {
+        boolean[][] valid = new boolean[9][9];
+        for (int i = 0; i < 9; i++)
+            for (int j = 0; j < 9; j++)
+                valid[i][j] = board[i][j] != 0;
+        return valid;
+    }
+
     public ValidationResult getValidationResult() {
         return new ValidationResult(rowDups, colDups, boxDups);
     }
