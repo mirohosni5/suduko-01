@@ -3,8 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package View;
+import Controller.ControllerFacade;
 import Controller.DifficultyEnum;
 import Controller.Viewable;
+import SudokuSolutionVerifier.ValidationResult;
+import SudokuSolutionVerifier.DuplicateValue;
+import java.util.HashSet;
+import java.util.Set;
 import model.Catalog;
 import model.Game;
 
@@ -14,9 +19,11 @@ import model.Game;
  */
 public class ViewControllerAdapter implements controllable {
     private final Viewable controller;
+    private final ControllerFacade facade;
     
     public ViewControllerAdapter(Viewable controller) {
         this.controller = controller;
+        this.facade = (ControllerFacade) controller;
     }
      @Override
     public boolean[] getCatalog() {
@@ -45,23 +52,54 @@ public class ViewControllerAdapter implements controllable {
     }
     @Override
     public boolean[][] verifyGame(int[][] game) {
-        Game g = new Game(game);
-        String result = controller.verifyGame(g);
-        boolean[][] validationResult = new boolean[9][9];
+         boolean[][] validationResult = new boolean[9][9];
+        
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 validationResult[i][j] = true;
             }
         }
-        if (result.startsWith("INVALID")) {
-            String[] parts = result.split(" ");
-            for (int i = 1; i < parts.length; i++) {
-                String[] coords = parts[i].split(",");
-                int row = Integer.parseInt(coords[0]);
-                int col = Integer.parseInt(coords[1]);
-                validationResult[row][col] = false;
+        
+        ValidationResult result = facade.getDetailedValidation(game);
+        Set<String> invalidCells = new HashSet<>();
+        
+        for (DuplicateValue dup : result.getRowDups()) {
+            int row = dup.getIndex() - 1;
+            for (int colPos : dup.getPositions()) {
+                int col = colPos;
+                invalidCells.add(row + "," + col);
             }
-        } 
+        }
+        
+        for (DuplicateValue dup : result.getColDups()) {
+            int col = dup.getIndex() - 1;
+            for (int rowPos : dup.getPositions()) {
+                int row = rowPos;
+                invalidCells.add(row + "," + col);
+            }
+        }
+        
+        for (DuplicateValue dup : result.getBoxDups()) {
+            int boxIndex = dup.getIndex() - 1;
+            int boxRow = boxIndex / 3;
+            int boxCol = boxIndex % 3;
+            
+            for (int linearPos : dup.getPositions()) {
+                int localRow = linearPos / 3;
+                int localCol = linearPos % 3;
+                int row = boxRow * 3 + localRow;
+                int col = boxCol * 3 + localCol;
+                invalidCells.add(row + "," + col);
+            }
+        }
+        
+        for (String cell : invalidCells) {
+            String[] parts = cell.split(",");
+            int row = Integer.parseInt(parts[0]);
+            int col = Integer.parseInt(parts[1]);
+            validationResult[row][col] = false;
+        }
+        
         return validationResult;
     }
     @Override

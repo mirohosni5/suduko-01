@@ -1,6 +1,7 @@
 package Controller;
 
 import SudokuSolutionVerifier.GameState;
+import SudokuSolutionVerifier.ValidationResult;
 import View.UserAction;
 
 import java.io.BufferedReader;
@@ -110,7 +111,11 @@ public class ControllerFacade implements Viewable {
         }
         return lastAction;
     }
-
+    public ValidationResult getDetailedValidation(int[][] board) {
+    s.verify(board);
+    return s.getValidationResult();
+}
+    
     private int[][] loadBoardFromFile(String path) throws IOException {
         int[][] b = new int[9][9];
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
