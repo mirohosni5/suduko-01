@@ -269,7 +269,7 @@ public class SudokuGUI extends JFrame {
     }
     private void updateSolveButton() {
         int emptyCount = countEmptyCells();
-        solveButton.setEnabled(emptyCount <= 5);
+        solveButton.setEnabled(emptyCount == 5);
         if (emptyCount == 5) {
             statusLabel.setText("5 empty cells - Solve button enabled!");
             statusLabel.setForeground(new Color(0, 100, 200));
