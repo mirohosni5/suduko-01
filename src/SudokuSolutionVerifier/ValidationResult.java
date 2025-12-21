@@ -18,9 +18,17 @@ public class ValidationResult {
         this.boxDups = b == null ? new ArrayList<>() : new ArrayList<>(b);
     }
 
-    public List<DuplicateValue> getRowDups() { return Collections.unmodifiableList(rowDups); }
-    public List<DuplicateValue> getColDups() { return Collections.unmodifiableList(colDups); }
-    public List<DuplicateValue> getBoxDups() { return Collections.unmodifiableList(boxDups); }
+    public List<DuplicateValue> getRowDups() {
+        return Collections.unmodifiableList(rowDups);
+    }
+
+    public List<DuplicateValue> getColDups() {
+        return Collections.unmodifiableList(colDups);
+    }
+
+    public List<DuplicateValue> getBoxDups() {
+        return Collections.unmodifiableList(boxDups);
+    }
 
     public List<String> getRows() {
         List<String> out = new ArrayList<>();
