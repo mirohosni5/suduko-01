@@ -15,4 +15,7 @@ public class Catalog {
         return current;
     }
 
+    public boolean allModesExist() {
+        return allModesExist;
+    }
 }
