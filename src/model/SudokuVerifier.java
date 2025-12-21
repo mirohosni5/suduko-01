@@ -3,6 +3,7 @@ package model;
 import SudokuSolutionVerifier.DuplicateValue;
 import SudokuSolutionVerifier.GameState;
 import SudokuSolutionVerifier.ValidationResult;
+
 import java.util.*;
 
 public class SudokuVerifier {
@@ -19,7 +20,7 @@ public class SudokuVerifier {
 
         boolean incomplete = false;
 
-        // ================= ROWS =================
+        //chack rows
         for (int i = 0; i < 9; i++) {
             boolean[] seen = new boolean[10];
             List<Integer>[] positions = new ArrayList[10];
@@ -49,7 +50,7 @@ public class SudokuVerifier {
             }
         }
 
-        // ================= COLUMNS =================
+        //check columns
         for (int j = 0; j < 9; j++) {
             boolean[] seen = new boolean[10];
             List<Integer>[] positions = new ArrayList[10];
@@ -79,7 +80,7 @@ public class SudokuVerifier {
             }
         }
 
-        // ================= BOXES =================
+        //check boxes
         for (int boxRow = 0; boxRow < 9; boxRow += 3) {
             for (int boxCol = 0; boxCol < 9; boxCol += 3) {
 
