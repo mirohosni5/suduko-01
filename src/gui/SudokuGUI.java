@@ -1,9 +1,6 @@
 package gui;
 
 import SudokuSolutionVerifier.*;
-
-
-
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -13,27 +10,13 @@ public class SudokuGUI extends JFrame {
     private JTextField[][] cells = new JTextField[9][9];
     private ControllerFacade controller;
 
-    // A REAL partially-filled Sudoku board (0 = empty)
-    private static final int[][] START_BOARD = {
-            {5, 3, 0, 0, 7, 0, 0, 0, 0},
-            {6, 0, 0, 1, 9, 5, 0, 0, 0},
-            {0, 9, 8, 0, 0, 0, 0, 6, 0},
-
-            {8, 0, 0, 0, 6, 0, 0, 0, 3},
-            {4, 0, 0, 8, 0, 3, 0, 0, 1},
-            {7, 0, 0, 0, 2, 0, 0, 0, 6},
-
-            {0, 6, 0, 0, 0, 0, 2, 8, 0},
-            {0, 0, 0, 4, 1, 9, 0, 0, 5},
-            {0, 0, 0, 0, 8, 0, 0, 7, 9}
-    };
-
-    public SudokuGUI() {
-        controller = new ControllerFacade(copyBoard(START_BOARD));
+    // 👇 constructor now RECEIVES the board
+    public SudokuGUI(int[][] board) {
+        controller = new ControllerFacade(copyBoard(board));
 
         setTitle("Sudoku");
         setSize(520, 600);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
 
         JLabel title = new JLabel("Sudoku", JLabel.CENTER);
@@ -47,7 +30,6 @@ public class SudokuGUI extends JFrame {
         setVisible(true);
     }
 
-
     private JPanel createGrid() {
         JPanel panel = new JPanel(new GridLayout(9, 9));
         panel.setBorder(new LineBorder(Color.BLACK, 2));
@@ -56,7 +38,6 @@ public class SudokuGUI extends JFrame {
 
         for (int r = 0; r < 9; r++) {
             for (int c = 0; c < 9; c++) {
-
                 JTextField tf = new JTextField();
                 tf.setHorizontalAlignment(JTextField.CENTER);
                 tf.setFont(new Font("Arial", Font.BOLD, 16));
@@ -65,7 +46,7 @@ public class SudokuGUI extends JFrame {
                 if (board[r][c] != 0) {
                     tf.setText(String.valueOf(board[r][c]));
                     tf.setEditable(false);
-                    tf.setBackground(new Color(220, 220, 220)); // fixed cells
+                    tf.setBackground(new Color(220, 220, 220));
                 }
 
                 final int row = r;
@@ -88,7 +69,6 @@ public class SudokuGUI extends JFrame {
         return panel;
     }
 
-
     private JPanel createButtons() {
         JPanel panel = new JPanel();
 
@@ -106,10 +86,7 @@ public class SudokuGUI extends JFrame {
         return panel;
     }
 
-    
     private void verifyBoard() {
-
-        
         syncBoardFromGUI();
 
         SudokuMode mode = new SequentialMode();
@@ -119,14 +96,13 @@ public class SudokuGUI extends JFrame {
             JOptionPane.showMessageDialog(this,
                     "INCOMPLETE ⚠️\nFill all cells first.");
         } else if (result.isValid()) {
-            JOptionPane.showMessageDialog(this,
-                    "VALID ✅");
+            JOptionPane.showMessageDialog(this, "VALID ✅");
         } else {
             JOptionPane.showMessageDialog(this,
                     "INVALID ❌\nThere are duplicates.");
         }
     }
-    //helper classes that i will need
+
     private void syncBoardFromGUI() {
         int[][] board = controller.getBoard();
 
@@ -134,33 +110,18 @@ public class SudokuGUI extends JFrame {
             for (int c = 0; c < 9; c++) {
                 if (cells[r][c].isEditable()) {
                     String text = cells[r][c].getText().trim();
-                    if (text.isEmpty()) {
-                        board[r][c] = 0;
-                    } else {
-                        try {
-                            board[r][c] = Integer.parseInt(text);
-                        } catch (Exception e) {
-                            board[r][c] = 0;
-                        }
-                    }
+                    board[r][c] = text.isEmpty() ? 0 : Integer.parseInt(text);
                 }
             }
         }
     }
 
-
-    
     private void refreshBoard() {
         int[][] board = controller.getBoard();
-        for (int r = 0; r < 9; r++) {
-            for (int c = 0; c < 9; c++) {
-                if (cells[r][c].isEditable()) {
-                    cells[r][c].setText(
-                            board[r][c] == 0 ? "" : String.valueOf(board[r][c])
-                    );
-                }
-            }
-        }
+        for (int r = 0; r < 9; r++)
+            for (int c = 0; c < 9; c++)
+                if (cells[r][c].isEditable())
+                    cells[r][c].setText(board[r][c] == 0 ? "" : String.valueOf(board[r][c]));
     }
 
     private boolean hasZero(int[][] board) {
@@ -175,10 +136,5 @@ public class SudokuGUI extends JFrame {
         for (int i = 0; i < 9; i++)
             System.arraycopy(src[i], 0, copy[i], 0, 9);
         return copy;
-    }
-
-    
-    public static void main(String[] args) {
-        new SudokuGUI();
     }
 }
