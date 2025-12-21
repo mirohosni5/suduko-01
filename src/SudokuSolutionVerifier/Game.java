@@ -34,5 +34,8 @@ public class Game {
         return count;
     }
 
+    public boolean canSolve() {
+        return countEmptyCells() == 5;
+    }
 
 }
