@@ -79,12 +79,7 @@ public class SudokuGUI extends JFrame {
                 currentDifficulty = level;
                 createGameUI();
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(
-                    this,
-                    "Error loading game: " + e.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE
-                );
+                JOptionPane.showMessageDialog(this,"Error loading game: " + e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
                 selectDifficulty();
             }
         } else {
@@ -97,11 +92,9 @@ public class SudokuGUI extends JFrame {
         mainPanel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
         JPanel boardPanel = createBoardPanel();
         mainPanel.add(boardPanel, BorderLayout.CENTER);
-        
         JPanel controlPanel = createControlPanel();
         mainPanel.add(controlPanel, BorderLayout.SOUTH);
-        
-        statusLabel = new JLabel("Fill in the empty cells", JLabel.CENTER);
+        statusLabel = new JLabel("Fill the empty cells", JLabel.CENTER);
         statusLabel.setFont(new Font("Arial", Font.BOLD, 14));
         mainPanel.add(statusLabel, BorderLayout.NORTH);
         add(mainPanel);
@@ -149,10 +142,8 @@ public class SudokuGUI extends JFrame {
                 boardPanel.add(cells[i][j]);
             }
         }
-        
         return boardPanel;
     }
-    
     private JPanel createControlPanel() {
         JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         
@@ -196,7 +187,6 @@ public class SudokuGUI extends JFrame {
                 currentBoard[row][col] = 0;
             }
         }
-        
         updateSolveButton();
     }
     
@@ -212,10 +202,8 @@ public class SudokuGUI extends JFrame {
     private void verifyGame() {
         try {
             boolean[][] validation = controller.verifyGame(currentBoard);
-            
             boolean allValid = true;
             boolean hasEmpty = false;
-            
             for (int i = 0; i < 9; i++) {
                 for (int j = 0; j < 9; j++) {
                     if (currentBoard[i][j] == 0) {
@@ -274,8 +262,7 @@ public class SudokuGUI extends JFrame {
     }
     private void undoLastMove() {
         try {
-            facade.undoLastAction();
-            
+            facade.undoLastAction(); 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this,"Error undoing: " + e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
         }
