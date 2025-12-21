@@ -1,21 +1,27 @@
 package View;
 
 public class UserAction {
-    public int row;
-    public int col;
-    public int oldValue;
+    public int row, col, oldValue, newValue;
 
-    public UserAction(int r, int c, int old) {
+    public UserAction(int r, int c, int oldV, int newV) {
         row = r;
         col = c;
-        oldValue = old;
+        oldValue = oldV;
+        newValue = newV;
     }
+
     @Override
     public String toString() {
-        return row + "," + col + "," + oldValue;
+        return row + "," + col + "," + oldValue + "," + newValue;
     }
-    public static UserAction fromString(String str) {
-        String[] parts = str.split(",");
-        return new UserAction(Integer.parseInt(parts[0]),Integer.parseInt(parts[1]),Integer.parseInt(parts[2]));
+
+    public static UserAction fromString(String s) {
+        String[] parts = s.split(",");
+        int r = Integer.parseInt(parts[0]);
+        int c = Integer.parseInt(parts[1]);
+        int oldV = Integer.parseInt(parts[2]);
+        int newV = Integer.parseInt(parts[3]);
+        return new UserAction(r, c, oldV, newV);
     }
 }
+
