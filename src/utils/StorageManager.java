@@ -5,7 +5,7 @@
 package utils;
 
 import utils.NotFoundException;
-import controller.DifficultyEnum;
+import Controller.DifficultyEnum;
 import View.UserAction;
 import java.io.BufferedReader;
 import java.io.File;

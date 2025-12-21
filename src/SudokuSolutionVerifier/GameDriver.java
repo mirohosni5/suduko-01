@@ -7,7 +7,7 @@ package SudokuSolutionVerifier;
 import utils.StorageManager;
 import utils.RandomPairs;
 import utils.InvalidGame;
-import controller.DifficultyEnum;
+import Controller.DifficultyEnum;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
