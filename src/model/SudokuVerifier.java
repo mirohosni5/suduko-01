@@ -7,82 +7,90 @@ import java.util.*;
 
 public class SudokuVerifier {
 
-    private List<DuplicateValue> rowDups;
-    private List<DuplicateValue> colDups;
-    private List<DuplicateValue> boxDups;
-
-    public SudokuVerifier() {
-        rowDups = new ArrayList<>();
-        colDups = new ArrayList<>();
-        boxDups = new ArrayList<>();
-    }
+    private final List<DuplicateValue> rowDups = new ArrayList<>();
+    private final List<DuplicateValue> colDups = new ArrayList<>();
+    private final List<DuplicateValue> boxDups = new ArrayList<>();
 
     public GameState verify(int[][] board) {
+
         rowDups.clear();
         colDups.clear();
         boxDups.clear();
 
         boolean incomplete = false;
 
-        //Check Rows
+        // ================= ROWS =================
         for (int i = 0; i < 9; i++) {
             boolean[] seen = new boolean[10];
             List<Integer>[] positions = new ArrayList[10];
-            for (int v = 0; v <= 9; v++) positions[v] = new ArrayList<>();
+            for (int k = 1; k <= 9; k++) positions[k] = new ArrayList<>();
 
             for (int j = 0; j < 9; j++) {
                 int v = board[i][j];
+
                 if (v == 0) {
                     incomplete = true;
                     continue;
                 }
 
-                if (seen[v]) {
-                    List<Integer> pos = new ArrayList<>(positions[v]);
-                    pos.add(j);
-                    rowDups.add(new DuplicateValue("ROW", i, v, pos));
-                } else {
+                positions[v].add(j);
+
+                if (!seen[v]) {
                     seen[v] = true;
-                    positions[v].add(j);
+                }
+            }
+
+            for (int v = 1; v <= 9; v++) {
+                if (positions[v].size() > 1) {
+                    rowDups.add(
+                            new DuplicateValue("ROW", i + 1, v, positions[v])
+                    );
                 }
             }
         }
 
-        //Check Columns
+        // ================= COLUMNS =================
         for (int j = 0; j < 9; j++) {
             boolean[] seen = new boolean[10];
             List<Integer>[] positions = new ArrayList[10];
-            for (int v = 0; v <= 9; v++) positions[v] = new ArrayList<>();
+            for (int k = 1; k <= 9; k++) positions[k] = new ArrayList<>();
 
             for (int i = 0; i < 9; i++) {
                 int v = board[i][j];
+
                 if (v == 0) {
                     incomplete = true;
                     continue;
                 }
 
-                if (seen[v]) {
-                    List<Integer> pos = new ArrayList<>(positions[v]);
-                    pos.add(i);
-                    colDups.add(new DuplicateValue("COLUMN", j, v, pos));
-                } else {
+                positions[v].add(i);
+
+                if (!seen[v]) {
                     seen[v] = true;
-                    positions[v].add(i);
+                }
+            }
+
+            for (int v = 1; v <= 9; v++) {
+                if (positions[v].size() > 1) {
+                    colDups.add(
+                            new DuplicateValue("COLUMN", j + 1, v, positions[v])
+                    );
                 }
             }
         }
 
-        //Check Boxes
+        // ================= BOXES =================
         for (int boxRow = 0; boxRow < 9; boxRow += 3) {
             for (int boxCol = 0; boxCol < 9; boxCol += 3) {
 
-                boolean[] seen = new boolean[10];
                 List<Integer>[] positions = new ArrayList[10];
-                for (int v = 0; v <= 9; v++) positions[v] = new ArrayList<>();
-                int boxIndex = (boxRow / 3) * 3 + (boxCol / 3);
+                for (int k = 1; k <= 9; k++) positions[k] = new ArrayList<>();
+
+                int boxIndex = (boxRow / 3) * 3 + (boxCol / 3) + 1;
 
                 for (int i = 0; i < 3; i++) {
                     for (int j = 0; j < 3; j++) {
+
                         int v = board[boxRow + i][boxCol + j];
                         int linearPos = i * 3 + j;
 
@@ -91,22 +99,26 @@ public class SudokuVerifier {
                             continue;
                         }
 
-                        if (seen[v]) {
-                            List<Integer> pos = new ArrayList<>(positions[v]);
-                            pos.add(linearPos);
-                            boxDups.add(new DuplicateValue("BOX", boxIndex, v, pos));
-                        } else {
-                            seen[v] = true;
-                            positions[v].add(linearPos);
-                        }
+                        positions[v].add(linearPos);
+                    }
+                }
+
+                for (int v = 1; v <= 9; v++) {
+                    if (positions[v].size() > 1) {
+                        boxDups.add(
+                                new DuplicateValue("BOX", boxIndex, v, positions[v])
+                        );
                     }
                 }
             }
         }
 
+        if (!rowDups.isEmpty() || !colDups.isEmpty() || !boxDups.isEmpty())
+            return GameState.INVALID;
 
-        if (!rowDups.isEmpty() || !colDups.isEmpty() || !boxDups.isEmpty()) return GameState.INVALID;
-        if (incomplete) return GameState.INCOMPLETE;
+        if (incomplete)
+            return GameState.INCOMPLETE;
+
         return GameState.VALID;
     }
 
