@@ -131,7 +131,7 @@ public class SudokuGUI extends JFrame {
         return false;
     }
 
-    private int[][] copyBoard(int[][] src) {
+    private int[][] copyBoard(int src) {
         int[][] copy = new int[9][9];
         for (int i = 0; i < 9; i++)
             System.arraycopy(src[i], 0, copy[i], 0, 9);
