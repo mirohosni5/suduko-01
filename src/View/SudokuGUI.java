@@ -1,6 +1,6 @@
 package View;
 
-import controller.ControllerFacade;
+import Controllerr.ControllerFacade;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;

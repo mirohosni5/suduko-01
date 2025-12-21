@@ -5,8 +5,8 @@
 package View;
 
 
-import controller.DifficultyEnum;
-import controller.Viewable;
+import Controllerr.DifficultyEnum;
+import Controllerr.Viewable;
 import model.Catalog;
 import model.Game;
 
