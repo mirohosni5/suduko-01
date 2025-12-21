@@ -1,4 +1,4 @@
-package Controllerr;
+package Controller;
 
 import SudokuSolutionVerifier.GameState;
 import View.UserAction;

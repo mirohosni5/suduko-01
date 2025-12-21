@@ -1,6 +1,6 @@
 package View;
 
-import Controllerr.ControllerFacade;
+import Controller.ControllerFacade;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -399,4 +399,15 @@ public class SudokuGUI extends JFrame {
         }
         return copy;
     }
+          public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            new SudokuGUI();
+        });
+    }
+    
 }

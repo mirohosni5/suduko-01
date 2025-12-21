@@ -1,4 +1,4 @@
-package Controllerr;
+package Controller;
 
 public enum DifficultyEnum {
     EASY,
