@@ -26,7 +26,7 @@ public class SudokuSolver {
         while (iterator.hasNext()) {
             int[] permutation = iterator.next();
 
-            // Fill
+            
             for (int k = 0; k < 5; k++) {
                 int x = emptyCells.get(k)[0];
                 int y = emptyCells.get(k)[1];
@@ -37,7 +37,7 @@ public class SudokuSolver {
                 return buildSolution(emptyCells, permutation);
             }
 
-            // Reset
+           
             for (int k = 0; k < 5; k++) {
                 int x = emptyCells.get(k)[0];
                 int y = emptyCells.get(k)[1];
