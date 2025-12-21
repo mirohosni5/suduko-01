@@ -26,4 +26,8 @@ public class Catalog {
     public void setAllModesExist(boolean allModesExist) {
         this.allModesExist = allModesExist;
     }
+
+    public boolean canStartNewGame() {
+        return allModesExist && !current;
+    }
 }
