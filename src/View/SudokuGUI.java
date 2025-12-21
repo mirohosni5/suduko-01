@@ -8,7 +8,7 @@ import java.io.File;
 
 public class SudokuGUI extends JFrame {
     
-    private controllable controller;
+    private final controllable controller;
     private JTextField[][] cells;
     private int[][] currentBoard;
     private int[][] originalBoard;
